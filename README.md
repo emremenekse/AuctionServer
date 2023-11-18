@@ -1,5 +1,9 @@
 # Auction Application
+![Project ScreenShots](https://github.com/emremenekse/AuctionServer/blob/a20d4a9961c4ccf2f03c41b0b6e81ac3bed8505e/AdminPanelForAuction.png)
 
+![Project ScreenShots](https://github.com/emremenekse/AuctionServer/blob/a20d4a9961c4ccf2f03c41b0b6e81ac3bed8505e/AuctionDetail.png)
+
+![Project ScreenShots](https://github.com/emremenekse/AuctionServer/blob/a20d4a9961c4ccf2f03c41b0b6e81ac3bed8505e/Profile.png)
 ## Overview
 Our Auction application is an interactive platform that allows users to create and participate in auctions under various organizations. This platform features organizations managed by company admins and auctions managed by sellers.
 
