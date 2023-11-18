@@ -39,6 +39,13 @@ namespace AuctionAPI.Controllers
             return Ok(userInfo);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddBalance([FromBody] UserOperationDTO userDTO)
+        {
+            await _userService.AddBalance(userDTO);
+            return Ok();
+        }
+
         [HttpPut]
         public async Task<IActionResult> UpdateUser([FromBody] User user)
         {

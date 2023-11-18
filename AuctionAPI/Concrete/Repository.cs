@@ -52,7 +52,6 @@ namespace AuctionAPI.Concrete
 
             if (updatedProperties.Any())
             {
-                // Sadece belirli özellikleri güncelle
                 foreach (var property in updatedProperties)
                 {
                     dbEntityEntry.Property(property).IsModified = true;
@@ -60,7 +59,6 @@ namespace AuctionAPI.Concrete
             }
             else
             {
-                // Tüm özellikleri güncelle
                 dbEntityEntry.State = EntityState.Modified;
             }
 
@@ -74,8 +72,16 @@ namespace AuctionAPI.Concrete
                 throw new KeyNotFoundException("Entity with the specified ID not found.");
             }
 
-            var propertyInfo = ((MemberExpression)fieldSelector.Body).Member as PropertyInfo;
-            if (propertyInfo == null)
+            MemberExpression memberExpression = fieldSelector.Body as MemberExpression;
+            if (memberExpression == null)
+            {
+                if (fieldSelector.Body is UnaryExpression unaryExpression)
+                {
+                    memberExpression = unaryExpression.Operand as MemberExpression;
+                }
+            }
+
+            if (memberExpression == null || !(memberExpression.Member is PropertyInfo propertyInfo))
             {
                 throw new ArgumentException("The fieldSelector expression does not refer to a valid property.");
             }
@@ -85,6 +91,7 @@ namespace AuctionAPI.Concrete
 
             await _context.SaveChangesAsync();
         }
+
 
         public Task DeleteAsync(T entity)
         {

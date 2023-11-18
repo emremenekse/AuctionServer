@@ -1,5 +1,6 @@
 using AuctionAPI.Concrete;
 using AuctionAPI.Data;
+using AuctionAPI.Hubs;
 using AuctionAPI.Middlewares;
 using AuctionAPI.Repository;
 using AuctionAPI.Services;
@@ -15,6 +16,7 @@ var Configuration = builder.Configuration;
 builder.Services.AddDbContext<AuctionDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IBidRepository, BidRepository>();
 builder.Services.AddScoped<IAuctionRepository, AuctionRepository>();
 builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -22,7 +24,9 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<AuctionService>();
 builder.Services.AddScoped<OrganizationService>();
 builder.Services.AddScoped<ProductService>();
-builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.WithOrigins("http://localhost:4200", "https://localhost:4200").AllowAnyHeader().AllowAnyMethod()));
+builder.Services.AddSignalR();
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.WithOrigins("http://localhost:4200", "https://localhost:4200").
+AllowAnyHeader().AllowAnyMethod().AllowCredentials().SetIsOriginAllowed(x => true)));
 //builder.Services.AddEndpointsApiExplorer();
 // Configure the HTTP request pipeline.
 
@@ -47,5 +51,6 @@ app.MapRazorPages();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers(); // Controller'larý etkinleþtirir.
+    endpoints.MapHub<BidHub>("/bidHub");
 });
 app.Run();

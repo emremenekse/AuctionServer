@@ -10,5 +10,6 @@
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }
         public bool IsNewUser{ get; set; }
+        public decimal? Balance { get; set; }
     }
 }

@@ -24,21 +24,31 @@ namespace AuctionAPI.Services
         }
         public static bool IsValidPassword(string password)
         {
-            // Regex ifadesi, sadece 6 haneli rakamlar için kontrol yapar.
+            
             return Regex.IsMatch(password, @"^\d{6}$");
         }
         public static bool IsValidEmail(string email)
         {
-            // Basit bir e-posta regex ifadesi
+            
             string pattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
             return Regex.IsMatch(email, pattern);
         }
         public static bool IsValidPhoneNumber(string password)
         {
-            // Regex ifadesi, şimdi sadece 11 haneli rakamlar için kontrol yapar.
+            
             return Regex.IsMatch(password, @"^\d{11}$");
         }
+        public async Task AddBalance(UserOperationDTO userOperationDTO)
+        {
+            var userList = await _userRepository.GetAllAsync();
+            var currentUser = userList.Where(x => x.Username == userOperationDTO.Username).FirstOrDefault();
+            if(currentUser != null && currentUser.Password == userOperationDTO.Password) {
+                await _userRepository.UpdateFieldAsync(currentUser.UserId, u => u.Balance, userOperationDTO.Balance);
 
+                await _userRepository.SaveAsync();
+            }
+           
+        }
         public async Task<User> CreateUser(UserOperationDTO userOperationDTO)
         {
             if (userOperationDTO.PhoneNumber != null && userOperationDTO.PhoneNumber.Count() > 0 &&
@@ -56,7 +66,7 @@ namespace AuctionAPI.Services
                         throw new Exception("The password must be exactly 6 digits long and consist only of numbers.");
                     }
                     
-                    // şifremi unuttum
+                    // PassForget
                     var currentUser = userList.Where(x => x.Username == userOperationDTO.Username).FirstOrDefault();
                     await _userRepository.UpdateFieldAsync(currentUser.UserId, u => u.Password, userOperationDTO.Password);
                    

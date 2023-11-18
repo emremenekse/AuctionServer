@@ -17,47 +17,40 @@ namespace AuctionAPI.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Auction ve Product arasındaki ilişki
             modelBuilder.Entity<Auction>()
                 .HasOne(a => a.Product)
                 .WithMany(p => p.Auctions)
                 .HasForeignKey(a => a.ProductId)
-                .OnDelete(DeleteBehavior.Restrict); // Ürün silindiğinde ilişkili açık artırmaları silme
+                .OnDelete(DeleteBehavior.Restrict); 
 
-            // Auction ve User (Winner) arasındaki ilişki
+            
             modelBuilder.Entity<Auction>()
                 .HasOne(a => a.Winner)
                 .WithMany(u => u.WonAuctions)
                 .HasForeignKey(a => a.WinnerUserId)
-                .OnDelete(DeleteBehavior.Restrict); // Kazanan kullanıcı silindiğinde ilişkili açık artırmaları silme
+                .OnDelete(DeleteBehavior.Restrict); 
 
-            // Bid ve User arasındaki ilişki
+            
             modelBuilder.Entity<Bid>()
                 .HasOne(b => b.User)
                 .WithMany(u => u.Bids)
                 .HasForeignKey(b => b.UserId)
-                .OnDelete(DeleteBehavior.Restrict); // Kullanıcı silindiğinde ilişkili teklifleri silme
-
-            // Bid ve Auction arasındaki ilişki
+                .OnDelete(DeleteBehavior.Restrict); 
             modelBuilder.Entity<Bid>()
                 .HasOne(b => b.Auction)
                 .WithMany(a => a.Bids)
                 .HasForeignKey(b => b.AuctionId)
-                .OnDelete(DeleteBehavior.Restrict); // Açık artırma silindiğinde ilişkili teklifleri silme
-
-            // Product ve User (Provider) arasındaki ilişki
+                .OnDelete(DeleteBehavior.Restrict); 
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Provider)
                 .WithMany(u => u.Products)
                 .HasForeignKey(p => p.ProviderId)
-                .OnDelete(DeleteBehavior.Restrict); // Sağlayıcı kullanıcı silindiğinde ilişkili ürünleri silme
-
-            // Organization ve User (AdminUser) arasındaki ilişki
+                .OnDelete(DeleteBehavior.Restrict); 
             modelBuilder.Entity<Organization>()
                 .HasOne(o => o.AdminUser)
                 .WithMany(u => u.Organizations)
                 .HasForeignKey(o => o.AdminUserId)
-                .OnDelete(DeleteBehavior.Restrict); // Admin kullanıcı silindiğinde ilişkili organizasyonları silme
+                .OnDelete(DeleteBehavior.Restrict); 
         }
     }
 }

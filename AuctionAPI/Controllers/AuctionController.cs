@@ -28,6 +28,13 @@ namespace AuctionAPI.Controllers
             return Ok(auction);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> MoneyTransfer([FromBody] AuctionOperationDTO auction)
+        {
+            await _auctionService.MoneyTransfer(auction);
+            return Ok(auction);
+        }
+
         [HttpGet]
         public async Task<List<Auction>> GetAllAuctions()
         {

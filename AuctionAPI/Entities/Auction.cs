@@ -12,12 +12,13 @@ namespace AuctionAPI.Entities
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
         public bool IsCompleted { get; set; }
-        public int? WinnerUserId { get; set; } // Açık artırmayı kazanan kullanıcının ID'si
+        public int? WinnerUserId { get; set; }
+        public string Description { get; set; }
 
         // Navigation properties
-        public Product Product { get; set; } // Açık artırması yapılan ürün
-        public ICollection<Bid> Bids { get; set; } // Açık artırmaya yapılan teklifler
-        public User Winner { get; set; } // Açık artırmayı kazanan kullanıcı
+        public Product Product { get; set; } 
+        public ICollection<Bid> Bids { get; set; } 
+        public User Winner { get; set; } 
         public Organization Organization { get; set; }
     }
 }

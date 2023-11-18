@@ -27,15 +27,15 @@ namespace AuctionAPI.Middlewares
 
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            // Sunucu tarafından öngörülen bir hata olduğunda 500 yerine daha uygun bir durum kodu kullanın.
-            var code = HttpStatusCode.InternalServerError; // 500 if unexpected
+            
+            var code = HttpStatusCode.InternalServerError; 
 
-            // Exception tipine göre uygun HTTP status kodunu ayarlayın.
+            
             if (exception is UnauthorizedAccessException)
                 code = HttpStatusCode.Unauthorized;
-            // Diğer özel durumlarınız burada kontrol edilebilir.
+           
 
-            // Hata mesajını JSON olarak dönüştür.
+            
             var result = JsonConvert.SerializeObject(new { error = exception.Message });
 
             context.Response.ContentType = "application/json";
@@ -45,7 +45,7 @@ namespace AuctionAPI.Middlewares
 
     }
 
-    // Extension method used to add the middleware to the HTTP request pipeline.
+    
     public static class ErrorHandlingMiddlewareExtensions
     {
         public static IApplicationBuilder UseErrorHandlingMiddleware(this IApplicationBuilder builder)

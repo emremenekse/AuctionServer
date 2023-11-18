@@ -5,11 +5,11 @@
         public int BidId { get; set; }
         public int UserId { get; set; }
         public int AuctionId { get; set; }
-        public decimal Amount { get; set; } // Teklif miktarı
-        public DateTime Timestamp { get; set; } // Teklif zaman damgası
+        public decimal Amount { get; set; } 
+        public DateTime Timestamp { get; set; } 
 
-        // Navigation properties
-        public User User { get; set; } // Teklifi veren kullanıcı
-        public Auction Auction { get; set; } // Teklifin yapıldığı açık artırma
+        
+        public User User { get; set; } 
+        public Auction Auction { get; set; } 
     }
 }
